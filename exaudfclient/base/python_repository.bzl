@@ -65,7 +65,7 @@ def _python_local_repository_impl(repository_ctx):
     build_file_content = """
 cc_library(
     name = "{name}",
-    srcs = glob(["{config_dir}/*.so"]),
+    srcs = glob(["{config_dir}/*.so","{config_dir}/*.o"]),
     hdrs = glob([{hdrs}]),
     includes = [{includes}],
     defines = [{defines}],

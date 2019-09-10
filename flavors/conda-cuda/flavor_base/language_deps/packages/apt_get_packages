@@ -1,0 +1,5 @@
+curl
+git
+wget 
+bzip2 
+ca-certificates
