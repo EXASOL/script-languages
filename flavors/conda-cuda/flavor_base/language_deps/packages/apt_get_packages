@@ -3,3 +3,4 @@ git
 wget 
 bzip2 
 ca-certificates
+binutils

@@ -118,9 +118,9 @@ cc_binary(
 cc_binary(
     name = "exaudfclient_py3_bin",
     srcs = ["exaudfclient.cc"],
-    linkopts = ["-ldl"], # needed for dynamicly loading libexaudflib_complete.so into another linker namespace
+    linkopts = ["-ldl", "-lpthread","-lrt","-lutil"], # needed for dynamicly loading libexaudflib_complete.so into another linker namespace
     deps = ["//exaudflib:header", "//:debug_message_h"]+VM_ENABLED_DEPS+VM_PYTHON3_DEPS+
-            ["//exaudflib:exaudflib-deps"],
+    ["//exaudflib:exaudflib-deps", "@python3//:python3"],
     defines = VM_ENABLED_DEFINES,
     data = [":libexaudflib_complete.so"]
 )

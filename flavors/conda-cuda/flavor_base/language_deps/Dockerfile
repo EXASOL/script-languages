@@ -11,7 +11,7 @@ RUN apt-get update && \
     apt-get -y autoremove && \
     ldconfig
 
-RUN /opt/conda/bin/conda install -y -v -c conda-forge python=3.6 numpy pandas cython gcc_linux-64 gxx_linux-64 gfortran_linux-64 swig bazel protobuf libprotobuf
+RUN /opt/conda/bin/conda install -y -v -c conda-forge python=3.6 numpy pandas cython gcc_linux-64 gxx_linux-64 gfortran_linux-64 swig bazel protobuf libprotobuf zeromq
 ENV PATH=$PATH:/opt/conda/bin
 
 COPY scripts /scripts

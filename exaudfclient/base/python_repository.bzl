@@ -65,7 +65,7 @@ def _python_local_repository_impl(repository_ctx):
     build_file_content = """
 cc_library(
     name = "{name}",
-    srcs = glob(["{config_dir}/*.so","{config_dir}/*.o"]),
+    srcs = glob(["python/opt/conda/lib/libpython3.6*"]),#"{config_dir}/*.a"]),
     hdrs = glob([{hdrs}]),
     includes = [{includes}],
     defines = [{defines}],
@@ -74,6 +74,7 @@ cc_library(
     print(build_file_content)
 
     repository_ctx.symlink(prefix, "."+prefix)
+    repository_ctx.symlink("/opt/conda/lib", "./python/opt/conda/lib")
     repository_ctx.file("BUILD", build_file_content)
 
 python_local_repository = repository_rule(

@@ -48,6 +48,7 @@ cc_library(
     hdrs = [
         "exaudflib.h",
     ],
+    deps=["@zmq//:zmqlib"],
     alwayslink=True,
 )
 

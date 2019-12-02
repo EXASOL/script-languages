@@ -13,15 +13,15 @@ def _protobuf_local_repository_impl(repository_ctx):
     build_file_content = """
 cc_library(
     name = "{name}",
-    srcs = glob(["protobuf/lib/libprotobuf*.so"]),
-    hdrs = glob(["protobuf/include/*"]),
-    includes = ["protobuf/include/"],
+    srcs = glob(["opt/conda/lib/libprotobuf*.so"]),
+    hdrs = glob(["opt/conda/include/**/*.h","opt/conda/include/**/*.inc", "opt/conda/include/**/*.hpp"]),
+    includes = ["opt/conda/include"],
     visibility = ["//visibility:public"]
 )""".format( name=repository_ctx.name)
     print(build_file_content)
 
-    repository_ctx.symlink(library_prefix, "./protobuf/lib")
-    repository_ctx.symlink(include_prefix, "./protobuf/include")
+    repository_ctx.symlink(library_prefix, "./opt/conda/lib")
+    repository_ctx.symlink(include_prefix, "./opt/conda/include")
     repository_ctx.file("BUILD", build_file_content)
 
 protobuf_local_repository = repository_rule(
