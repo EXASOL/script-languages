@@ -26,9 +26,9 @@ new_local_repository(
     build_file_content = """
 cc_library(
     name = "zmqlib",
-    srcs = ["usr/lib/x86_64-linux-gnu/libzmq.so"],
-    hdrs = glob(["usr/include/zmq*"]),
-    includes = ["usr/include/"],
+    srcs = ["opt/conda/lib/libzmq.so"],
+    hdrs = glob(["opt/conda/include/*"]),
+    includes = ["opt/conda/include"],
     visibility = ["//visibility:public"]
 )
     """

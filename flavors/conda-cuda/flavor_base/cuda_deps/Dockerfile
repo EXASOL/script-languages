@@ -73,7 +73,7 @@ RUN cd /tmp && \
 ENV NCCL_VERSION 2.4.6.1
 ENV CUDA_VERSION 10.0.130
 ENV CUDNN_VERSION 7.6.0
-RUN conda install -c anaconda cudatoolkit=$CUDA_VERSION cudnn=$CUDNN_VERSION && \
+RUN conda install -c nvidia cudatoolkit=$CUDA_VERSION cudnn=$CUDNN_VERSION && \
     conda install -c nvidia nccl=$NCCL_VERSION && \
-    conda install -c anaconda cudnn=$CUDNN_VERSION #&& \
+    conda install -c nvidia cudnn=$CUDNN_VERSION #&& \
     #conda clean
