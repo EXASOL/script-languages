@@ -7,4 +7,6 @@ WRAPPER_TEMPLATE=$3
 touch "$CLIENT_WRAPPER"
 cat "$WRAPPER_TEMPLATE" >> "$CLIENT_WRAPPER"
 echo >> "$CLIENT_WRAPPER"
+echo 'export PATH /opt/conda/bin:$PATH' >> "$CLIENT_WRAPPER"
+echo 'conda activate base' >> "$CLIENT_WRAPPER"
 echo ./$(basename "$CLIENT_BINARY") '$*' >>  "$CLIENT_WRAPPER"
