@@ -90,7 +90,7 @@ cc_library(
 # depend directly on them
 cc_library(
     name = "exaudflib",
-    srcs = ["exaudflib.cc","swig_vm_containers.h","socket_functions.h","check_thread.h"],
+    srcs = ["exaudflib.cc","swig_vm_containers.h","socket_functions.h","check_thread.h","external_process_check.h"],
     linkstatic = 1,
     alwayslink = True,
     defines = VM_ENABLED_DEFINES,

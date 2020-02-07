@@ -13,7 +13,7 @@
 #include "debug_message.h"
 #include "exaudflib/zmqcontainer.pb.h"
 #include "script_data_transfer_objects_wrapper.h"
-#include "check_thread.h"
+#include "external_process_check.h"
 
 #include <mutex>
 #define DONT_EXPOSE_SWIGVM_PARAMS

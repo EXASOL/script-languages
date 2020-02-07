@@ -7,18 +7,15 @@
 #include <fcntl.h>
 #include "debug_message.h"
 #include <zmq.hpp>
+// swig lib
+#include <limits>
+#include <unistd.h>
+
 #define DONT_EXPOSE_SWIGVM_PARAMS
 #include "exaudflib.h"
 #undef DONT_EXPOSE_SWIGVM_PARAMS
-
-// swig lib
-#include <limits>
-
-#include <unistd.h>
-
 #include "swig_vm_containers.h"
-
-
+#include "check_thread.h"
 
 #ifdef PROTEGRITY_PLUGIN_CLIENT
 #include <protegrityclient.h>
@@ -35,14 +32,8 @@ __thread SWIGVM_params_t* SWIGVMContainers::SWIGVM_params; // this is not used i
 #ifndef NDEBUG
 #define SWIGVM_LOG_CLIENT
 #endif
-//#define SWIGVM_LOG_CLIENT
-//#define LOG_COMMUNICATION
 
-
-
-
-
-
+static pid_t my_pid; //parent_pid,
 
 void delete_vm(SWIGVM*& vm){
     if (vm != nullptr)
@@ -52,10 +43,12 @@ void delete_vm(SWIGVM*& vm){
     }
 }
 
-
-//
-//
-// swig log
+void print_args(int argc,char**argv){
+    for (int i = 0; i<argc; i++)
+    {
+        cerr << "zmqcontainerclient argv[" << i << "] = " << argv[i] << endl;
+    }
+}
 
 
 extern "C" {
@@ -86,7 +79,7 @@ int exaudfclient_main(std::function<SWIGVM*()>vmMaker,int argc,char**argv)
     init_socket_name(socket_name_str);
 
     set_remote_client(false);
-    my_pid = ::getpid();
+    my_pid = ::getpid(); //TODO unused?
 
     zmq::context_t context(1);
 
@@ -293,12 +286,12 @@ reinit:
     DBG_STREAM_MSG(cerr,"### SWIGVM finishing with name '" << socket_name << " (" << ::getppid() << ',' << ::getpid() << ')');
 
     delete_vm(vm);
-    stop_all(socket);
+    stop_socket(socket);
     return 0;
 
 error:
     delete_vm(vm);
-    stop_all(socket);
+    stop_socket(socket);
     return 1;
 }
 
