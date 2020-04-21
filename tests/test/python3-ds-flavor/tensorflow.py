@@ -17,16 +17,24 @@ class TensorflowBasics(udf.TestCase):
         self.query(udf.fixindent('''
                 CREATE OR REPLACE python3 scalar SCRIPT tfbasic.import_keras()
                 returns varchar(1000) as
-                import keras
-                import tensorflow
-                import tensorflow_hub
                 
                 def run(ctx):
-                    return str(keras.__version__)
+                    import site as _site
+                    import os as _os
+                    
+                    _site.getusersitepackages()
+
+                    try:
+                        import tensorflow
+                    except Exception as e:
+                        exception_str = traceback.format_exc()
+                        return str(exception_str)
                 /
                 '''))
 
         row = self.query("select tfbasic.import_keras()")[0]
+        print(row)
+        self.fail()
 
 
 if __name__ == '__main__':
