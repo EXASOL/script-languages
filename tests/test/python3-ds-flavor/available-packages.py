@@ -16,6 +16,10 @@ class AvailablePythonPackages(udf.TestCase):
             CREATE OR REPLACE PYTHON3 SCALAR SCRIPT available_packages.test_import_of_package() returns VARCHAR(2000000) AS
             def run(ctx):
                 try:
+                    import site as _site
+                    import os as _os
+                    _site.getusersitepackages()
+
                     import %s
                     return "ok"
                 except Exception as e:

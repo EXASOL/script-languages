@@ -16,7 +16,7 @@ class TensorflowBasics(udf.TestCase):
     def test_import_keras(self):
         self.query(udf.fixindent('''
                 CREATE OR REPLACE python3 scalar SCRIPT tfbasic.import_keras()
-                returns varchar(1000) as
+                returns varchar(2000000) as
                 
                 def run(ctx):
                     import site as _site
@@ -26,15 +26,15 @@ class TensorflowBasics(udf.TestCase):
 
                     try:
                         import tensorflow
+                        return "ok"
                     except Exception as e:
                         exception_str = traceback.format_exc()
                         return str(exception_str)
                 /
                 '''))
 
-        row = self.query("select tfbasic.import_keras()")[0]
-        print(row)
-        self.fail()
+        rows = self.query("select tfbasic.import_keras()")
+        self.assertRowsEqual([("ok",)], rows)
 
 
 if __name__ == '__main__':
