@@ -17,10 +17,10 @@ FROM {{flavor_base_deps}}
 RUN mkdir -p /build_info/packages/flavor_customization
 
 COPY flavor_customization/packages/apt_get_packages /build_info/packages/flavor_customization
-RUN /scripts/install_via_apt.pl --file /build_info/packages/flavor_base_deps/apt_get_packages --with-versions
+RUN /scripts/install_via_apt.pl --file /build_info/packages/flavor_customization/apt_get_packages --with-versions
 
-COPY flavor_customization/packages/pip3_packages /build_info/packages/flavor_base_deps
-RUN /scripts/install_via_pip.pl --file /build_info/packages/flavor_base_deps/pip3_packages --python-binary python3
+COPY flavor_customization/packages/pip3_packages /build_info/packages/flavor_customization
+RUN /scripts/install_via_pip.pl --file /build_info/packages/flavor_customization/pip3_packages --python-binary python3
 
 
 ##########################################################################
