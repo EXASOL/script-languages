@@ -1,9 +1,11 @@
 # EXASOL Script Languages
+
 [![Build Status](https://travis-ci.org/exasol/script-languages.svg?branch=master)](https://travis-ci.org/exasol/script-languages)
 
 ###### Please note that this is an open source project which is officially supported by EXASOL. For any question, you can contact our support team.
 
 ## Table of Contents
+
 1. [About](#about)
 2. [Prerequisites](#prerequisites)
 3. [Getting Started](#getting-started)
@@ -16,6 +18,7 @@
 10. [Cleaning up after your are finished](#cleaning-up-after-your-are-finished)
 
 ## About
+
 This project contains script language containers for user defined functions (UDF's) 
 that can be used in the EXASOL database (version 6.0.0 or later). 
 A script language container consists of a Linux container with a complete linux distribution and all required libraries, 
@@ -27,7 +30,9 @@ Pre-built containers can you find in the [release section](https://github.com/ex
 If you are interested in the script client you find more details [here](src/README.md).
 
 ## Prerequisites
+
 In order to build this project, you need:
+
 * Linux or Mac OS X (experimental) with bash and tar
 * Docker >= 17.05 [multi-stage builds required](https://docs.docker.com/develop/develop-images/multistage-build/)
 * Python >=3.6 with pip
@@ -82,42 +87,11 @@ ALTER SESSION SET SCRIPT_LANGUAGES='<LANGUAGE_ALIAS>=localzmq+protobuf:///<bucke
 
 ## How to customize an existing flavor?
 
-To customize an existing flavor you can add your specific needs to the Dockerfile in the flavor-customization directory. 
-You can run commands with:
-
-```Dockerfile
-RUN <command>
-```
-
-For example, to install new software you can use:
-
-```Dockerfile
-RUN apt-get -y update && \
-    apt-get install \<packages> && \
-    apt-get -y clean && \
-    apt-get -y autoremove
-```
-    
-You need to run apt-get update, because any previous step clears the cache of apt to keep the docker images small. 
-The commands 
-
-```Dockerfile
-apt-get -y clean and apt-get -y autoremove 
-```
-
-clear the cache.
-
-You can add to the flavor-customization directory additional files which you can use in the Dockerfile via:
-
-```Dockerfile
-COPY flavor-customization/<your-file-or-directory> <destination>
-```
-
-or 
-
-```Dockerfile
-ADD flavor-customization/<your-file-or-directory> <destination>
-```
+To customize an existing flavor you can add your specific needs to the Dockerfile in the `flavors/<flavor>/flavor-customization` directory. The easiest way to extend a flavor is by installing additional packages.
+Under `flavors/<flavor>/flavor-customization/packages` you can find files which list packages which will 
+get installed. If you want to change or add other things you are able to add Dockerfile commands to
+`flavors/<flavor>/flavor-customization/Dockerfile`. Please follow the instruction in in there, if you add 
+Dockerfile commands. 
 
 Your changes on the file system will then be merged with the file system of the script client
 which contains all necessary libraries that are required to run the script language runtime.
@@ -141,8 +115,6 @@ $ ./exaslct upload --flavor-path=flavors/<flavor-name> --database-host <hostname
 ```
 
 Note: The tool `exaslct` tries to reuse as much as possible of the previous build or tries to pull already exising images from Docker Hub.
-
-
 
 ## Force a rebuild
 
@@ -175,6 +147,7 @@ otherwise they would not proceed.
 If you want to build several different build-stages at once, you can repeat the --goal option.
 
 The following build-stage are currently available:
+
 * udfclient-deps
 * language-deps
 * build-deps
