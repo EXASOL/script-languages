@@ -1,7 +1,5 @@
 # EXASOL Script Languages
 
-[![Build Status](https://travis-ci.org/exasol/script-languages.svg?branch=master)](https://travis-ci.org/exasol/script-languages)
-
 ###### Please note that this is an open source project which is officially supported by EXASOL. For any question, you can contact our support team.
 
 ## Table of Contents
@@ -24,10 +22,10 @@ that can be used in the EXASOL database (version 6.0.0 or later).
 A script language container consists of a Linux container with a complete linux distribution and all required libraries, 
 such as a script client. A script client is responsible for the communication with the database and for executing the script code.
 We provide in this repository several [flavors](flavors) of script language containers, 
-such as the current standard implementation of the [script client](src) with support for Python 2/3, R und Java. 
+such as the current standard implementation of the [script client](exaudfclient/base) with support for Python 2/3, R und Java. 
 We will show here how to customize and build the different flavors of the script language containers. 
 Pre-built containers can you find in the [release section](https://github.com/exasol/script-languages/releases) of this repository.
-If you are interested in the script client you find more details [here](src/README.md).
+If you are interested in the script client you find more details [here](exaudfclient/base/README.md).
 
 ## Prerequisites
 
@@ -43,6 +41,16 @@ In order to build this project, you need:
   is located we recommend additionally at least 10 GB free disk space.
 
 Further, prerequisites might be necessary for specific tasks. These are listed under the corresponding section.
+
+## Getting Started
+
+If you only want to use pre-built containers, you can find them in the [release section](https://github.com/exasol/script-languages/releases) of this repository. However, if you want build custom container you need to clone this repository.
+
+```bash
+$ git clone --recurse-submodules https://github.com/exasol/script-languages.git 
+```
+
+Note: The option --recurse-submodules clones the submodule [script-languages](https://github.com/exasol/script-languages)
 
 ## How to build an existing flavor?
 
