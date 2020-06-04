@@ -10,6 +10,23 @@ then
 else
   terminal_parameter=""
 fi
-docker run --rm $terminal_parameter -v "$PWD:$PWD" -v /var/run/docker.sock:/var/run/docker.sock -w "$PWD" exatk/script-languages:exalsct_docker_runner bash -c "source /venv/bin/activate && ./exaslct-without-docker-runner $*; chown -R $(id -u):$(id -g) .build_output &> /dev/null"
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  if [[ -z "$IS_WSL" && -z "$WSL_DISTRO_NAME" ]];
+  then
+    echo "Detecting Linux, using docker host networking"
+    network_parameter="--network=host"
+  else
+    echo "Microsoft Windows Subsystem for Linux is currently not supported, please use Linux or MacOS X."
+  fi
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "Detecting MacOS X, using default networking"
+    network_parameter=""
+else
+    echo "$OSTYPE is not supported, please use Linux or MacOS X."
+fi
+
+
+docker run --rm $terminal_parameter $network_parameter -v "$PWD:$PWD" -v /var/run/docker.sock:/var/run/docker.sock -w "$PWD" exatk/script-languages:exalsct_docker_runner bash -c "source /venv/bin/activate && ./exaslct-without-docker-runner $*; chown -R $(id -u):$(id -g) .build_output &> /dev/null"
 
 popd &> /dev/null 
