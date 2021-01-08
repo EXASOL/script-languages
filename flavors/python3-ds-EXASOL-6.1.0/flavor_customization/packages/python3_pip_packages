@@ -7,3 +7,4 @@
 # also start a comment after the package definition.
 
 #tensorflow-probability|0.9.0
+dask[complete]|
